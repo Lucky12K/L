@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Error 404</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=UnifrakturCook:wght@700&family=EB+Garamond&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Cinzel Decorative', serif;
+      background-color: #0b0605;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+      opacity: 0.03;
+      z-index: 0;
+    }
+
+    .humo {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: url('https://i.gifer.com/EFI0.gif') center center / cover no-repeat;
+      opacity: 0.15;
+      z-index: 1;
+      transition: opacity 2s ease;
+    }
+
+    .pantalla-inicial {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #1e0f0f, #000);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .pantalla-inicial h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 2.5em;
+      color: #d4b79f;
+      text-align: center;
+      margin-bottom: 40px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      z-index: 3;
+    }
+
+    .pantalla-inicial button {
+      background: linear-gradient(145deg, #2e1d1d, #000);
+      border: 2px solid #a67b5b;
+      color: #d4b79f;
+      padding: 12px 35px;
+      font-size: 1.2em;
+      font-family: 'Cinzel Decorative', serif;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      z-index: 3;
+    }
+
+    .pantalla-inicial button:hover {
+      background: #a67b5b;
+      color: #1a1110;
+      box-shadow: 0 0 25px rgba(166, 123, 91, 0.8);
+    }
+
+    .carta {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://cdn.pixabay.com/photo/2016/11/29/02/05/paper-1866844_1280.jpg') no-repeat center center fixed;
+      background-size: cover;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 100px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.2s ease;
+    }
+
+    .contenido-carta {
+      background-color: rgba(0, 0, 0, 0.78);
+      padding: 60px;
+      border: 2px solid #5c3d3d;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 90%;
+      color: #f0e6dc;
+      font-family: 'EB Garamond', serif;
+      box-shadow: 0 0 40px rgba(0,0,0,0.7);
+      animation: desenrollar 1.5s ease-out forwards;
+      transform: scaleY(0);
+      transform-origin: top center;
+      text-align: justify;
+      position: relative;
+      display: flex;
+      gap: 20px;
+    }
+
+    /* Contenedor flex para organizar texto y botones */
+    .contenido-texto {
+      flex: 1 1 auto;
+    }
+
+    /* Contenedor para los botones a los costados */
+    .botones-laterales {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      /* Ajusta según necesidad */
+      align-items: center;
+    }
+
+    .botones-izquierda, .botones-derecha {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Botones styling */
+    .traducir-btn {
+      background: linear-gradient(145deg, #2e1d1d, #000);
+      border: 2px solid #a67b5b;
+      color: #d4b79f;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      font-family: 'Cinzel Decorative', serif;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      border-radius: 6px;
+      width: 130px;
+      text-align: center;
+    }
+
+    .traducir-btn:hover:enabled {
+      background-color: #a67b5b;
+      color: #1a1110;
+      box-shadow: 0 0 25px rgba(166, 123, 91, 0.8);
+    }
+
+    .traducir-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .firma {
+      text-align: right;
+      font-style: italic;
+      margin-top: 40px;
+      font-size: 1.1em;
+      width: 100%;
+    }
+
+    .sorpresa {
+      max-width: 300px;
+      border: 2px solid #a67b5b;
+      border-radius: 12px;
+      padding: 20px;
+      color: #d4b79f;
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1em;
+      background-color: rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      user-select: none;
+      box-shadow: 0 0 30px rgba(166, 123, 91, 0.9);
+    }
+
+    .sorpresa img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes desenrollar {
+      to {
+        transform: scaleY(1);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="humo" id="humo"></div>
+
+  <div class="pantalla-inicial" id="pantallaInicial">
+    <button onclick="mostrarCarta()">Open</button>
+  </div>
+
+  <div class="carta" id="carta">
+    <div class="contenido-carta" id="contenidoCarta">
+
+      <div class="contenido-texto">
+        <p id="textoCarta"></p>
+        <div class="firma" id="firma">
+          And I’m sorry—if I ever made you do something you didn’t want to, if I hurt you, or for any bad moments I may have caused... Love you.<br />By: L✨
+        </div>
+      </div>
+
+      <div class="botones-laterales">
+        <div class="botones-izquierda">
+          <button class="traducir-btn" id="btnTraducir" onclick="traducirTexto()" disabled>Traducir</button>
+        </div>
+        <div class="botones-derecha">
+          <button class="traducir-btn" id="btnSorpresa" onclick="mostrarSorpresa()" style="display:none;">🎁 Sorpresa</button>
+          <button class="traducir-btn" id="btnReiniciar" onclick="reiniciarCarta()" style="display:none;">🔄 Reiniciar</button>
+        </div>
+      </div>
+
+      <div id="sorpresaContainer" style="display:none;">
+        <!-- Aquí aparecerá la imagen y el texto sorpresa -->
+      </div>
+
+    </div>
+  </div>
+
+  <button id="toggleAudio" onclick="toggleAudio()">🔇</button>
+  <audio id="musicaFondo" src="music.mp3" preload="auto" loop></audio>
+
+  <script>
+    const textoOriginal = `I've never been good at explaining things, and this probably won't be the exception. But there are moments when you just feel like you have to say something. I guess this should be one of those.
+I couldn't say exactly what it was, but there was something about you that stayed with me, even on the most ordinary days. I never mentioned it.
+Meeting you was a strange accident—but one of the good ones that I’d gladly repeat. Sometimes we don’t realize what we hold dear until it's time to let go.
+Don’t worry. If one day, by chance, you think of me, don’t try to make sense of it all—just smile, be happy, and shine, beautiful. After all, every time you fall, I’ve seen you get back up. You can always achieve whatever you set your mind to.
+Take good care of yourself.`;
+
+    const textoTraducido = `Nunca he sido bueno explicando cosas, y probablemente esta no sea la excepción. Pero hay momentos en los que uno siente que debe dejar algo dicho. Supongo que este debería ser uno de esos.
+No sabría decir qué fue exactamente, pero hubo algo en ti que logró quedarse conmigo, incluso en los días más normales. Nunca lo mencioné.
+Coincidí fue un accidente extraño, pero de los buenos que volvería a repetir. A veces uno no se da cuenta de lo que tiene hasta que es momento de dejarlo ir.
+No te preocupes. Si algún día, por casualidad, piensas en mí, no trates de entenderlo todo—solo sonríe, sé feliz y brilla, hermosa. Después de todo, cada vez que caes, te he visto levantarte. Siempre puedes lograr lo que te propongas.
+Cuídate mucho.`;
+
+    const firmaOriginal = `And I’m sorry—if I ever made you do something you didn’t want to, if I hurt you, or for any bad moments I may have caused... Love you.<br>By: L✨`;
+    const firmaTraducida = `Y lo siento—si alguna vez te hice hacer algo que no querías, si te lastimé, o por cualquier mal momento que pude haber causado... Te quiero. T.A...<br>By: L✨`;
+
+    let traducido = false;
+
+    function escribirTexto(elemento, texto, velocidad = 40, callback = null) {
+      let i = 0;
+      elemento.innerHTML = "";
+      document.getElementById('btnTraducir').disabled = true;
+      document.getElementById('btnSorpresa').style.display = 'none';
+      // Limpiar sorpresa si estaba visible
+      document.getElementById('sorpresaContainer').style.display = 'none';
+      document.getElementById('sorpresaContainer').innerHTML = "";
+
+      function escribir() {
+        if (i < texto.length) {
+          elemento.innerHTML += texto.charAt(i);
+          i++;
+          setTimeout(escribir, velocidad);
+        } else {
+          document.getElementById('btnTraducir').disabled = false;
+          document.getElementById('btnSorpresa').style.display = 'block';
+          if (callback) callback();
+        }
+      }
+      escribir();
+    }
+
+    function mostrarCarta() {
+      const pantalla = document.getElementById('pantallaInicial');
+      const carta = document.getElementById('carta');
+      const musica = document.getElementById('musicaFondo');
+      const btnReiniciar = document.getElementById('btnReiniciar');
+
+      pantalla.style.opacity = '0';
+      setTimeout(() => {
+        pantalla.style.display = 'none';
+        carta.style.opacity = '1';
+        carta.style.pointerEvents = 'auto';
+        escribirTexto(document.getElementById('textoCarta'), textoOriginal);
+        document.getElementById('firma').innerHTML = firmaOriginal;
+        musica.play();
+        document.getElementById('toggleAudio').innerText = '🔊';
+        btnReiniciar.style.display = 'none';
+      }, 1000);
+    }
+
+    function traducirTexto() {
+      if (document.getElementById('btnTraducir').disabled) return;
+
+      if (!traducido) {
+        escribirTexto(document.getElementById('textoCarta'), textoTraducido);
+        document.getElementById('firma').innerHTML = firmaTraducida;
+        document.getElementById('btnTraducir').innerText = "Ver original";
+        traducido = true;
+      } else {
+        escribirTexto(document.getElementById('textoCarta'), textoOriginal);
+        document.getElementById('firma').innerHTML = firmaOriginal;
+        document.getElementById('btnTraducir').innerText = "Traducir";
+        traducido = false;
+      }
+    }
+
+    function mostrarSorpresa() {
+      const container = document.getElementById('sorpresaContainer');
+      container.style.display = 'flex';
+      container.className = 'sorpresa';
+      container.innerHTML = `
+        <img src="presente.jpg" alt="Regalo Sorpresa" />
+        <p>Intenté terminarlo lo que te prometí pero no pude y no creo poder dartelo así que es la única forma que veo regalártela ❤</p>
+      `;
+
+      const btnTraducir = document.getElementById('btnTraducir');
+      const btnSorpresa = document.getElementById('btnSorpresa');
+      const btnReiniciar = document.getElementById('btnReiniciar');
+
+      btnTraducir.disabled = true;
+      btnSorpresa.disabled = true;
+      btnReiniciar.style.display = 'block';
+    }
+
+    function reiniciarCarta() {
+      const sorpresaCont = document.getElementById('sorpresaContainer');
+      sorpresaCont.style.display = 'none';
+      sorpresaCont.innerHTML = "";
+
+      const btnTraducir = document.getElementById('btnTraducir');
+      const btnSorpresa = document.getElementById('btnSorpresa');
+      const btnReiniciar = document.getElementById('btnReiniciar');
+
+      btnTraducir.disabled = false;
+      btnSorpresa.disabled = false;
+
+      btnReiniciar.style.display = 'none';
+
+      // Colocamos texto original directamente sin animación para mejor UX al reiniciar
+      document.getElementById('textoCarta').innerHTML = textoOriginal;
+      document.getElementById('firma').innerHTML = firmaOriginal;
+
+      traducido = false;
+      btnTraducir.innerText = "Traducir";
+
+      btnSorpresa.style.display = 'block';
+    }
+
+    function toggleAudio() {
+      const musica = document.getElementById('musicaFondo');
+      const btn = document.getElementById('toggleAudio');
+      if (musica.paused) {
+        musica.play();
+        btn.innerText = '🔊';
+      } else {
+        musica.pause();
+        btn.innerText = '🔇';
+      }
+    }
+
+    setTimeout(() => {
+      const humo = document.getElementById('humo');
+      if (humo) {
+        humo.style.opacity = '0';
+      }
+    }, 10000);
+  </script>
+</body>
+</html>
